@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+release_info=$(curl --silent "https://api.github.com/repos/pineappleEA/pineapple-src/releases/latest")
+download_url=$(echo "$release_info" | grep '"browser_download_url":' | grep -Eo 'https://.+?\.AppImage')
+wget "$download_url" -O "${HOME}/yuzu/$(basename "$download_url")"
+chmod +x "${HOME}/yuzu/$(basename "$download_url")"
+rm "${HOME}/yuzu/yuzu"
+mv "${HOME}/yuzu/$(basename "$download_url")" "${HOME}/yuzu/yuzu"
